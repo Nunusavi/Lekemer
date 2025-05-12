@@ -1,0 +1,6 @@
+{
+    "editor.cursorStyle": "block",
+    "editor.fontSize": 10,
+    "files.autoSave": "afterDelay",
+    "editor.fontFamily": "Consolas, 'Courier New', monospace"
+}

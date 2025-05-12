@@ -4,7 +4,7 @@ class Database {
     private $connection;
 
     private function __construct() {
-        $this->connection = new PDO('mysql:host=localhost;dbname=your_database', 'username', 'password');
+        $this->connection = new PDO('mysql:host=localhost;dbname=shared_db', 'root', '');
     }
 
     public static function getInstance() {
