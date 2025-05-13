@@ -10,7 +10,7 @@ class UsersModel
 			$conn->beginTransaction();
 
 			// Generate database credentials
-			$db_name = "pos_" . strtolower(preg_replace('/\s+/', '_', $companyData["company_name"])) . "_" . time();
+			$db_name = "pos_" . strtolower(preg_replace('/\s+/', '_', $companyData["company_name"]));
 			$db_user = "user_" . substr(md5(uniqid()), 0, 8);
 			$db_pass = $userData["password"]; // raw password used for DB access
 			$db_host = "localhost";
@@ -20,9 +20,25 @@ class UsersModel
 			$tempConn->exec("CREATE DATABASE `$db_name`");
 
 			// Import POS schema
-			$schema = file_get_contents("../Database/posystem.sql");
+			$schemaFilePath = realpath(__DIR__ . "/../Database/posystem.sql");
+			if (!file_exists($schemaFilePath)) {
+				throw new Exception("Schema file not found at $schemaFilePath");
+			}
+
+			$schema = file_get_contents($schemaFilePath);
+			if ($schema === false) {
+				throw new Exception("Failed to read schema file at $schemaFilePath");
+			}
+
 			$posConn = new PDO("mysql:host=$db_host;dbname=$db_name", "root", "");
+			$posConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$posConn->exec($schema);
+
+			// Create user and grant privileges
+			$tempConn->exec("CREATE USER '$db_user'@'$db_host' IDENTIFIED BY '$db_pass'");
+			$tempConn->exec("GRANT ALL PRIVILEGES ON `$db_name`.* TO '$db_user'@'$db_host
+			'");
+			$tempConn->exec("FLUSH PRIVILEGES");
 
 			// Insert into companies
 			$stmt1 = $conn->prepare("INSERT INTO companies (company_name, email, address, subscription_plan, db_name, db_host, db_user, db_password)
@@ -63,4 +79,23 @@ class UsersModel
 			return ["status" => "error", "message" => $e->getMessage()];
 		}
 	}
+
+
+    static public function loginUser($email) {
+		$conn = Database::getInstance()->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    static public function getCompanyById($company_id) {
+        $conn = Database::getInstance()->getConnection();	
+        $stmt = $conn->prepare("SELECT * FROM companies WHERE id = :id LIMIT 1");
+        $stmt->bindParam(":id", $company_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
