@@ -2,6 +2,8 @@ CREATE TABLE companies (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
+    adress VARCHAR(255) NOT NULL,
+    subscription_plan VARCHAR(255) NOT NULL,
     db_name VARCHAR(255) NOT NULL UNIQUE,
     db_host VARCHAR(255) NOT NULL DEFAULT 'localhost',
     db_user VARCHAR(255) NOT NULL,
@@ -14,7 +16,7 @@ CREATE TABLE users (
     company_id INT NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    role ENUM('owner', 'admin', 'cashier') DEFAULT 'admin',
+    role ENUM('accountant', 'admin', 'cashier', 'store manager') DEFAULT 'admin',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE
 );

@@ -2,7 +2,7 @@
     <section class="sidebar">
         <ul class="sidebar-menu">
             <?php
-            if ($_SESSION["profile"] == "Administrator") {
+            if ($_SESSION["role"] == "admin") {
                 echo '
                 <li class="active">
                     <a href="home">
@@ -11,7 +11,7 @@
                     </a>
                 </li>';
             }
-            if ($_SESSION["profile"] == "Administrator" || $_SESSION["profile"] == "merchant") {
+            if ($_SESSION["role"] == "admin" || $_SESSION["role"] == "cashier") {
                 echo '
                 <li>
                     <a href="categories">
@@ -26,7 +26,7 @@
                     </a>
                 </li>';
             }
-            if ($_SESSION["profile"] == "Administrator" || $_SESSION["profile"] == "merchant" || $_SESSION["profile"] == "store manager") {
+            if ($_SESSION["role"] == "admin" || $_SESSION["role"] == "cashier" || $_SESSION["role"] == "store manager") {
                 echo '
                 <li>
                     <a href="customers">
@@ -35,7 +35,7 @@
                     </a>
                 </li>';
             }
-            if ($_SESSION["profile"] == "Administrator" || $_SESSION["profile"] == "merchant") {
+            if ($_SESSION["role"] == "admin" || $_SESSION["role"] == "cashier") {
                 echo '
                 <li class="treeview">
                     <a href="#">
@@ -58,7 +58,7 @@
                                 <span>Manage Sales</span>
                             </a>
                         </li>';
-                if ($_SESSION["profile"] == "merchant") {
+                if ($_SESSION["role"] == "cashier") {
                     echo '
                         <li>
                             <a href="products">
@@ -77,7 +77,7 @@
                     </ul>
                 </li>';
             }
-            if ($_SESSION["profile"] == "Administrator" || $_SESSION["profile"] == "store manager") {
+            if ($_SESSION["role"] == "admin" || $_SESSION["role"] == "store manager") {
                 echo '
                 <li>
                     <a href="inventory">
@@ -86,7 +86,7 @@
                     </a>
                 </li>';
             }
-            if ($_SESSION["profile"] == "Administrator" || $_SESSION["profile"] == "accountant") {
+            if ($_SESSION["role"] == "admin" || $_SESSION["role"] == "accountant") {
                 echo '
                 <li>
                     <a href="financial-report">

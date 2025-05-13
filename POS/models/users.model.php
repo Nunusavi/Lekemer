@@ -19,6 +19,9 @@ class UsersModel
 
 	static public function MdlShowUsers($tableUsers, $item, $value)
 	{
+		if(!self::$conn) {
+			throw new Exception("Database connection not initialized.");
+		}
 
 		if ($item != null) {
 

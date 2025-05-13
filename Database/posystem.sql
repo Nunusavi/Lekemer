@@ -119,7 +119,7 @@ CREATE TABLE `users` (
   `name` text NOT NULL,
   `user` text NOT NULL,
   `password` text NOT NULL,
-  `profile` text NOT NULL,
+  role ENUM('accountant', 'admin', 'cashier', 'store manager'),
   `photo` text NOT NULL,
   `status` int(1) NOT NULL,
   `lastLogin` datetime NOT NULL,

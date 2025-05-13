@@ -29,16 +29,20 @@
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-  <div class="container">
-    <div class="Le-Kemer-form-header-logo" style="padding: 50px;">
+<body class="bg-gray-100 min-h-screen flex flex-row justify-center items-center flex-nowrap gap-5">
+  <div class="container w-auto">
+    <div class="Le-Kemer-form-header-logo pb-3 text-center" style="padding:px;">
       <a href="/Lekemer">
         <p id="name-logo" style="font-size: x-large;">Le-Kemer</p>
       </a>
     </div>
+    <div class="text-center">
+        <span class="text-sm text-gray-600">Don’t have an account?</span>
+        <a href="/Lekemer/sign-up" class="text-sm text-blue-600 hover:underline">Sign Up</a>
+      </div>
   </div>
-  <div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-4xl">
-    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Sign In to Lekemer</h2>
+  <div class="bg-white flex-1  p-8 rounded-2xl shadow-md w-full max-w-md mx-auto">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Sign In to Lekemer POS</h2>
 
     <form id="loginForm" method="post" class="space-y-6">
       <div>
@@ -71,10 +75,7 @@
         </button>
       </div>
 
-      <div class="text-center mt-4">
-        <span class="text-sm text-gray-600">Don’t have an account?</span>
-        <a href="/Lekemer/sign-up" class="text-sm text-blue-600 hover:underline">Sign Up</a>
-      </div>
+      
     </form>
   </div>
 </body>
@@ -100,7 +101,7 @@
 
       const data = await response.json();
 
-      if (data?.status === "ok") {
+      if (data?.status === "success") {
         window.location.href = "/Lekemer/POS/";
       } else {
         alert(`Error: ${data?.message || "Invalid credentials"}`);
@@ -110,29 +111,6 @@
       alert("An unexpected error occurred. Please try again later.");
     }
 
-    // Second fetch logic
-    fetch("ajax/login.ajax.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: new URLSearchParams({
-        email: email,
-        password: password
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.status === "success") {
-          console.log(data)
-          window.location.href = "/POS/index.php"; // ✅ Update if POS path is different
-        } else {
-          console.log(data);
-          alert(`Error: ${data.message || "Invalid credentials"}`);
-           window.location.href = "Lekemer/POS/index.php";
-        }
-      })
-      .catch(err => alert("AJAX failed: " + err));
   });
 </script>
 

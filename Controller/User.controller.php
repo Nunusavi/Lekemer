@@ -20,7 +20,8 @@ class UsersController
 			return $result;
 		}
 	}
-	static public function authenticate($email, $password) {
+	static public function authenticate($email, $password)
+	{
 		try {
 			$user = UsersModel::loginUser($email);
 
@@ -30,11 +31,15 @@ class UsersController
 				if ($company) {
 					// Store in session
 					session_start();
-					$_SESSION["logged_in"] = true;
+					$_SESSION["loggedIn"] = true;
 					$_SESSION["user_id"] = $user["id"];
+					$_SESSION["role"] = $user["role"];
+					$_SESSION["name"] = $user["name"];
+					$_SESSION["email"] = $user["email"];
 					$_SESSION["company_id"] = $company["id"];
 					$_SESSION["company_db"] = [
 						"host" => $company["db_host"],
+						"company_name" => $company["name"],
 						"name" => $company["db_name"],
 						"user" => $company["db_user"],
 						"password" => $company["db_password"]

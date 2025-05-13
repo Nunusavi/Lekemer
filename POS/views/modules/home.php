@@ -8,28 +8,28 @@
   </section>
   <section class="content">
     <div class="row">
-      <?php if ($_SESSION["profile"] == "Administrator" || $_SESSION["profile"] == "Seller") {
+      <?php if ($_SESSION["role"] == "admin" || $_SESSION["role"] == "Seller") {
         include "home/top-boxes.php";
       } ?>
     </div>
     <div class="row">
       <div class="col-lg-12">
-        <?php if ($_SESSION["profile"] == "Administrator") {
+        <?php if ($_SESSION["role"] == "admin") {
           include "reports/sales-graph.php";
         } ?>
       </div>
       <div class="col-lg-6">
-        <?php if ($_SESSION["profile"] == "Administrator") {
+        <?php if ($_SESSION["role"] == "admin") {
           include "reports/bestseller-products.php";
         } ?>
       </div>
       <div class="col-lg-4">
-        <?php if ($_SESSION["profile"] == "Administrator") {
+        <?php if ($_SESSION["role"] == "admin") {
           include "reports/sellers.php";
         } ?>
       </div>
       <div class="col-lg-12">
-        <?php if ($_SESSION["profile"] == "special" || $_SESSION["profile"] == "seller") {
+        <?php if ($_SESSION["role"] == "special" || $_SESSION["role"] == "seller") {
           echo '<div class="box box-default">
                   <div class="box-header">
                     <h1>Welcome ' . $_SESSION["name"] . '</h1>
@@ -38,7 +38,7 @@
         } ?>
       </div>
       <div class="col-lg-12">
-        <?php if ($_SESSION["profile"] == "seller") {
+        <?php if ($_SESSION["role"] == "seller") {
           echo '<a href="create-sale">
                   <button class="btn btn-success">
                     <i class="fa fa-plus"></i> Add Sale
@@ -96,7 +96,7 @@
                         <button class="btn btn-warning btnPrintBill" saleCode="' . $value["code"] . '">
                           <i class="fa fa-print"></i>
                         </button>';
-              if ($_SESSION["profile"] == "Administrator") {
+              if ($_SESSION["role"] == "admin") {
                 echo '<button class="btn btn-primary btnEditSale" idSale="' . $value["id"] . '"><i class="fa fa-pencil"></i></button>
                       <button class="btn btn-danger btnDeleteSale" idSale="' . $value["id"] . '"><i class="fa fa-trash"></i></button>';
               }

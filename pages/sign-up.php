@@ -31,38 +31,55 @@
 </head>
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-  <div class="container">
-    <div class="Le-Kemer-form-header-logo" style="padding: 50px;">
+  <div class="container w-auto">
+    <div class="Le-Kemer-form-header-logo pb-3 text-center" style="padding:px;">
       <a href="/Lekemer">
         <p id="name-logo" style="font-size: x-large;">Le-Kemer</p>
       </a>
+      <div class="text-center mt-1">
+        <span class="text-sm text-gray-600">Already have an account?</span>
+        <a href="/Lekemer/sign-in" class="text-sm text-blue-600 hover:underline">Sign In</a>
+      </div>
     </div>
   </div>
   </div>
-  <div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-4xl">
-    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Register to Lekemer</h2>
+  <div class="bg-white p-10 rounded-2xl  shadow-md w-75 h-75 max-w-lg mx-auto">
+    <h2 class="text-2xl font-bold text-center mb-2 text-gray-800">Register to Lekemer</h2>
 
     <form id="registerForm" method="post" class="space-y-6">
       <!-- Company Info -->
       <div>
         <h3 class="text-lg font-semibold text-gray-700 mb-2">Company Info</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
           <div>
             <label for="company_name" class="block text-sm font-medium text-gray-700">Company Name</label>
             <input type="text" id="company_name" name="company_name"
-              class="mt-1 block w-full border border-gray-300 rounded-lg p-2" required>
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-1" required>
           </div>
 
           <div>
             <label for="address" class="block text-sm font-medium text-gray-700">Company Address</label>
-            <input type="text" id="address" name="address"
-              class="mt-1 block w-full border border-gray-300 rounded-lg p-2" required>
+            <select id="address" name="address"
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-1" required>
+              <option value="" disabled selected>Select a region</option>
+              <option value="Addis Ababa">Addis Ababa</option>
+              <option value="Amhara">Amhara</option>
+              <option value="Oromia">Oromia</option>
+              <option value="Tigray">Tigray</option>
+              <option value="Sidama">Sidama</option>
+              <option value="Afar">Afar</option>
+              <option value="Somali">Somali</option>
+              <option value="Benishangul-Gumuz">Benishangul-Gumuz</option>
+              <option value="Gambela">Gambela</option>
+              <option value="Harari">Harari</option>
+              <option value="Southern Nations, Nationalities, and Peoples' Region">Southern Nations, Nationalities, and Peoples' Region</option>
+            </select>
           </div>
 
           <div class="md:col-span-2">
             <label for="subscription_plan" class="block text-sm font-medium text-gray-700">Subscription Plan</label>
             <select id="subscription_plan" name="subscription_plan"
-              class="mt-1 block w-full border border-gray-300 rounded-lg p-2" required>
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-1" required>
               <option value="" disabled selected>Select a plan</option>
               <option value="free">Free</option>
               <option value="starter">Starter</option>
@@ -75,35 +92,35 @@
       <!-- User Info -->
       <div>
         <h3 class="text-lg font-semibold text-gray-700 mb-2">User Info</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
           <div>
             <label for="full_name" class="block text-sm font-medium text-gray-700">Full Name</label>
             <input type="text" id="full_name" name="full_name"
-              class="mt-1 block w-full border border-gray-300 rounded-lg p-2" required>
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-1" required>
           </div>
 
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" id="email" name="email" class="mt-1 block w-full border border-gray-300 rounded-lg p-2"
+            <input type="email" id="email" name="email" class="mt-1 block w-full border border-gray-300 rounded-lg p-1"
               required>
           </div>
 
           <div>
             <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
             <input type="text" id="phone_number" name="phone_number"
-              class="mt-1 block w-full border border-gray-300 rounded-lg p-2" required>
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-1  " required>
           </div>
 
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
             <input type="password" id="password" name="password"
-              class="mt-1 block w-full border border-gray-300 rounded-lg p-2" required>
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-1" required>
           </div>
 
           <div class="md:col-span-2">
             <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
             <input type="password" id="confirm_password" name="confirm_password"
-              class="mt-1 block w-full border border-gray-300 rounded-lg p-2" required>
+              class="mt-1 block w-full border border-gray-300 rounded-lg p-1" required>
             <p id="password_match_error" class="text-red-500 text-sm mt-1 hidden">Passwords do not match.</p>
           </div>
           <script>
@@ -131,6 +148,7 @@
           Register
         </button>
       </div>
+
     </form>
   </div>
 </body>

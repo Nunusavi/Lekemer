@@ -1,4 +1,22 @@
-<?php session_start(); ?>
+<?php
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Custom error handler to log errors to the console
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+  $error = [
+    'type' => $errno,
+    'message' => $errstr,
+    'file' => $errfile,
+    'line' => $errline
+  ];
+  echo "<script>console.error(" . json_encode($error) . ");</script>";
+  return true; // Prevent the PHP internal error handler from running
+});
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -40,33 +58,46 @@
   <script src="views/bower_components/morris.js/morris.min.js"></script> <!-- ChartJS http://www.chartjs.org/-->
   <script src="views/bower_components/Chart.js/Chart.js"></script>
 </head>
+<script>
+  console.log(<?php echo json_encode($_SESSION); ?>);
+  console.log(<?php echo json_encode($_SESSION["company_db"]); ?>);
+</script>
 
 <body class="hold-transition skin-red-light sidebar-collapse sidebar-mini login-page">
   <!-- Site wrapper -->
-  <?php 
-  if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] == "ok") {
+  <?php
+  if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] = true) {
     echo '<div class="wrapper">';
-    
+
     /*=============================================
     =            Header
     =============================================*/
     include "modules/header.php";
-    
+
     /*=============================================
     =            Sidebar
     =============================================*/
     include "modules/sidebar.php";
-    
+
     /*=============================================
     =            Content
     =============================================*/
     if (isset($_GET["route"])) {
       $allowedRoutes = [
-        'home', 'users', 'categories', 'products', 'customers', 
-        'sales', 'create-sale', 'edit-sale', 'reports', 
-        'inventory', 'financial-report', 'logout'
+        'home',
+        'users',
+        'categories',
+        'products',
+        'customers',
+        'sales',
+        'create-sale',
+        'edit-sale',
+        'reports',
+        'inventory',
+        'financial-report',
+        'logout'
       ];
-      
+
       if (in_array($_GET["route"], $allowedRoutes)) {
         include "modules/" . $_GET["route"] . ".php";
       } else {
@@ -74,19 +105,16 @@
       }
     } else {
       include "modules/home.php";
-    }
-    
+    } 
+
     /*=============================================
     =            Footer
     =============================================*/
     include "modules/footer.php";
-    
+
     echo '</div>';
-  } else {
-    /*=============================================
-    =            Login
-    =============================================*/
-    include "modules/login.php";
+  }else {
+    include "../Lekemer/pages/sign-in.php";
   }
   ?>
   <!-- ./wrapper -->

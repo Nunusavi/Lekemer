@@ -1,19 +1,47 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["company_db"])) {
-    die("No database info in session.");
-}
+class Connection
+{
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
+    private $conn;
 
-$db = $_SESSION["company_db"];
+    public function __construct()
+    {
+        if (!isset($_SESSION["company_db"])) {
+            die("Access denied: missing company_db session");
+        }
 
-try {
-    $pdo = new PDO(
-        "mysql:host={$db['host']};dbname={$db['name']}",
-        $db["user"],
-        $db["password"]
-    );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("DB Connection failed: " . $e->getMessage());
+        $db_info = $_SESSION["company_db"];
+        $this->host = $db_info["host"];
+        $this->db_name = $db_info["name"];
+        $this->username = $db_info["user"];
+        $this->password = $db_info["password"];
+    }
+
+    public function connect()
+    {
+        if ($this->conn === null) {
+            try {
+                $this->conn = new PDO(
+                    "mysql:host=" . filter_var($this->host, FILTER_SANITIZE_STRING) . ";dbname=" . filter_var($this->db_name, FILTER_SANITIZE_STRING),
+                    $this->username,
+                    $this->password
+                );
+                $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $exception) {
+                die("DB Connection failed: " . $exception->getMessage());
+            }
+        }
+
+        return $this->conn;
+    }
+
+    public function close()
+    {
+        $this->conn = null;
+    }
 }

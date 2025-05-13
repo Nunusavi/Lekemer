@@ -34,17 +34,18 @@ class UsersModel
 			$posConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$posConn->exec($schema);
 
+		
+
 			// Create user and grant privileges
-			$tempConn->exec("CREATE USER '$db_user'@'$db_host' IDENTIFIED BY '$db_pass'");
-			$tempConn->exec("GRANT ALL PRIVILEGES ON `$db_name`.* TO '$db_user'@'$db_host
-			'");
+			$tempConn->exec("CREATE USER IF NOT EXISTS '$db_user'@'localhost' IDENTIFIED BY '$db_pass'");
+			$tempConn->exec("GRANT ALL PRIVILEGES ON `$db_name`.* TO '$db_user'@'localhost' IDENTIFIED BY '$db_pass'");
 			$tempConn->exec("FLUSH PRIVILEGES");
 
 			// Insert into companies
-			$stmt1 = $conn->prepare("INSERT INTO companies (company_name, email, address, subscription_plan, db_name, db_host, db_user, db_password)
-				VALUES (:company_name, :email, :address, :plan, :db_name, :db_host, :db_user, :db_password)");
+			$stmt1 = $conn->prepare("INSERT INTO companies (name, email, address, subscription_plan, db_name, db_host, db_user, db_password)
+				VALUES (:name, :email, :address, :plan, :db_name, :db_host, :db_user, :db_password)");
 			$stmt1->execute([
-				":company_name" => $companyData["company_name"],
+				":name" => $companyData["company_name"],
 				":email" => $userData["email"],
 				":address" => $companyData["address"],
 				":plan" => $companyData["subscription_plan"],
@@ -66,12 +67,19 @@ class UsersModel
 				":phone" => $userData["phone_number"],
 				":password" => password_hash($userData["password"], PASSWORD_DEFAULT)
 			]);
+			$userId = $conn->lastInsertId();
+			// Get the user role 
+			$stmt3 = $conn->prepare("SELECT role FROM users WHERE id = :id LIMIT 1");
+			$stmt3->execute([":id" => $userId]);
+			$userRole = $stmt3->fetchColumn();
+			// Insert user into the new database
+			$posConn->exec("INSERT INTO users (id, name, user, password, role, status) 
+				VALUES ('$userId', '{$userData["full_name"]}', '$db_user', '" . password_hash($userData["password"], PASSWORD_DEFAULT) . "', '$userRole', 1)");
 
 			$conn->commit();
 
 			return [
 				"status" => "ok",
-				"token" => $token,
 				"company_id" => $companyId
 			];
 		} catch (Exception $e) {
@@ -81,21 +89,24 @@ class UsersModel
 	}
 
 
-    static public function loginUser($email) {
+	static public function loginUser($email)
+	{
 		$conn = Database::getInstance()->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
-        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-        $stmt->execute();
+		$stmt = $conn->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
+		$stmt->bindParam(":email", $email, PDO::PARAM_STR);
+		$stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
 
-    static public function getCompanyById($company_id) {
-        $conn = Database::getInstance()->getConnection();	
-        $stmt = $conn->prepare("SELECT * FROM companies WHERE id = :id LIMIT 1");
-        $stmt->bindParam(":id", $company_id, PDO::PARAM_INT);
-        $stmt->execute();
+	static public function getCompanyById($company_id)
+	{
+		$conn = Database::getInstance()->getConnection();
+		$stmt = $conn->prepare("SELECT * FROM companies WHERE id = :id LIMIT 1");
+		$stmt->bindParam(":id", $company_id, PDO::PARAM_INT);
+		$stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
 }
