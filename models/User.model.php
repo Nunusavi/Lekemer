@@ -87,8 +87,6 @@ class UsersModel
 			return ["status" => "error", "message" => $e->getMessage()];
 		}
 	}
-
-
 	static public function loginUser($email)
 	{
 		$conn = Database::getInstance()->getConnection();
