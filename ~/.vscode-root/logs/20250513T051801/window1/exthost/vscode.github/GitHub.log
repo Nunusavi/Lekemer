@@ -1,4 +1,0 @@
-2025-05-13 05:18:03.193 [info] Log level: Info
-2025-05-13 05:18:28.265 [info] Log level: Info
-2025-05-13 05:18:32.876 [warning] [GitHubBranchProtectionProvider][updateRepositoryBranchProtection] Failed to update repository branch protection: No GitHub authentication session available.
-2025-05-13 05:18:41.206 [warning] [GitHubSourceControlHistoryItemDetailsProvider][_loadAssignableUsers] Failed to load assignable user(s) for Nunusavi/Lekemer: Error: No GitHub authentication session available.
