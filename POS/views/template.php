@@ -58,10 +58,7 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
   <script src="views/bower_components/morris.js/morris.min.js"></script> <!-- ChartJS http://www.chartjs.org/-->
   <script src="views/bower_components/Chart.js/Chart.js"></script>
 </head>
-<script>
-  console.log(<?php echo json_encode($_SESSION); ?>);
-  console.log(<?php echo json_encode($_SESSION["company_db"]); ?>);
-</script>
+
 
 <body class="hold-transition skin-red-light sidebar-collapse sidebar-mini login-page">
   <!-- Site wrapper -->
@@ -105,7 +102,7 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
       }
     } else {
       include "modules/home.php";
-    } 
+    }
 
     /*=============================================
     =            Footer
@@ -113,8 +110,9 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     include "modules/footer.php";
 
     echo '</div>';
-  }else {
-    include "../Lekemer/pages/sign-in.php";
+  } else {
+    header("Location: /Lekemer/pages/sign-in.php");;
+    exit;
   }
   ?>
   <!-- ./wrapper -->

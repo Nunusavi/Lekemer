@@ -51,28 +51,48 @@ class UsersModel
 	=============================================*/
 
 	static public function mdlAddUser($table, $data)
-	{
-
-		$stmt = self::$conn->connect()->prepare("INSERT INTO $table(name, user, password, profile, photo) VALUES (:name, :user, :password, :profile, :photo)");
+{
+	try {
+		// 1. Insert user into the tenant (POS) DB
+		$stmt = self::$conn->connect()->prepare(
+			"INSERT INTO $table(name, user, password, role, photo) 
+			 VALUES (:name, :user, :password, :role, :photo)"
+		);
 
 		$stmt->bindParam(":name", $data["name"], PDO::PARAM_STR);
 		$stmt->bindParam(":user", $data["user"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $data["password"], PDO::PARAM_STR);
-		$stmt->bindParam(":profile", $data["profile"], PDO::PARAM_STR);
+		$stmt->bindParam(":role", $data["profile"], PDO::PARAM_STR);
 		$stmt->bindParam(":photo", $data["photo"], PDO::PARAM_STR);
 
-		if ($stmt->execute()) {
-
-			return 'ok';
-		} else {
-
+		if (!$stmt->execute()) {
 			return 'error';
 		}
 
-		$stmt->close();
+		// 2. Insert user into the main/shared DB
+		require_once "mainconnection.php";
+		$mainPdo = MainConnection::connect();
 
-		$stmt = null;
+		$mainStmt = $mainPdo->prepare(
+			"INSERT INTO users(email, password, company_id, role) 
+			 VALUES (:email, :password, :company_id, :role)"
+		);
+
+		$mainStmt->bindParam(":email", $data["user"], PDO::PARAM_STR);
+		$mainStmt->bindParam(":password", $data["password"], PDO::PARAM_STR);
+		$mainStmt->bindParam(":company_id", $data["company_id"], PDO::PARAM_INT); // must be passed in $data
+		$mainStmt->bindParam(":role", $data["profile"], PDO::PARAM_STR);
+
+		$mainStmt->execute();
+
+		return 'ok';
+
+	} catch (Exception $e) {
+		error_log("User creation error: " . $e->getMessage());
+		return 'error';
 	}
+}
+
 
 
 	/*=============================================

@@ -1,6 +1,4 @@
 <?php
 session_destroy();
-echo '<script>
-    window.location = "login";
-</script>';
+header("Location: http://localhost/Lekemer/");
 exit();

@@ -205,10 +205,10 @@
                 <select class="form-control input-lg" name="newProfile">
 
                   <option value="">Select Level</option>
-                  <option value="administrator">Administrator</option>
-                  <option value="merchant">Merchant</option>
-                  <option value="store manager">Store Manager</option>
-                  <option value="accountant">Accountant</option>
+                    <option value="accountant">Accountant</option>
+                    <option value="admin">Admin</option>
+                    <option value="cashier">Cashier</option>
+                    <option value="store manager">Store Manager</option>
 
                 </select>
 

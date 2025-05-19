@@ -1,2 +1,10 @@
-./~
-./.vscode
+# Ignore temporary files and IDE settings
+*.tmp
+*.log
+*.swp
+*.swo
+*.bak
+*.orig
+*.DS_Store
+.vscode/
+.~/

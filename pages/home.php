@@ -99,8 +99,8 @@
           <a class="Le-Kemer-default-btn pill Le-Kemer-header-btn" data-text="Get started" href="/Lekemer/sign-up">
             <span class="button-wraper">Get started</span>
           </a>
-          <a class="Le-Kemer-default-btn pill Le-Kemer-header-btn" data-text="Get started" href="/Lekemer/sign-in">
-            <span class="button-wraper">Log in</span>
+          <a class="Le-Kemer-default-btn pill Le-Kemer-header-btn" data-text="Log-in" href="/Lekemer/sign-in">
+            <span class="button-wraper">Log-in</span>
           </a>
         </div>
         

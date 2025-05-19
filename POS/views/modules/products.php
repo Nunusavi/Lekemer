@@ -67,7 +67,7 @@ if ($_SESSION["profile"] == "Seller") {
 
         </table>
 
-        <input type="hidden" value="<?php echo $_SESSION['profile']; ?>" id="hiddenProfile">
+        <!-- <input type="hidden" value="<?php echo $_SESSION['']; ?>" id="hiddenProfile"> -->
 
       </div>
 
