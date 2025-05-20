@@ -8,3 +8,8 @@
 *.DS_Store
 .vscode/
 .~/
+package-lock.json/
+node_modules/
+# Ignore build artifacts
+dist/
+bu
