@@ -12,4 +12,12 @@ package-lock.json/
 node_modules/
 # Ignore build artifacts
 dist/
-bu
+.env
+*.json
+*.lock
+*.cache
+phpunit.xml
+vendor/
+tmp/
+Tests/
+tests/

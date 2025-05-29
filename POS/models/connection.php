@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 class Connection
 {
     private $host;
@@ -27,7 +28,7 @@ class Connection
         if ($this->conn === null) {
             try {
                 $this->conn = new PDO(
-                    "mysql:host=" . filter_var($this->host, FILTER_SANITIZE_STRING) . ";dbname=" . filter_var($this->db_name, FILTER_SANITIZE_STRING),
+                    "mysql:host=" . trim($this->host) . ";dbname=" . trim($this->db_name),
                     $this->username,
                     $this->password
                 );
@@ -38,6 +39,11 @@ class Connection
         }
 
         return $this->conn;
+    }
+    public function connection()
+    {
+        $connObj = new Connection();
+        return $connObj->connect();
     }
 
     public function close()

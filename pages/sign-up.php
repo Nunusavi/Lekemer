@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Register</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css">
+  <!-- <link rel="stylesheet" href="style.css"> -->
   <link href="https://fonts.cdnfonts.com/css/beyonders" rel="stylesheet">
 
   <link
@@ -81,9 +81,9 @@
             <select id="subscription_plan" name="subscription_plan"
               class="mt-1 block w-full border border-gray-300 rounded-lg p-1" required>
               <option value="" disabled selected>Select a plan</option>
-              <option value="free">Free</option>
-              <option value="starter">Starter</option>
-              <option value="premium">Premium</option>
+              <option value="essential">Essential</option>
+              <option value="professional">Professional</option>
+              <option value="enterprise">Enterprise</option>
             </select>
           </div>
         </div>
@@ -165,6 +165,8 @@
       });
 
       const data = await response.json();
+      // show the response 
+      console.log(data);
 
       if (data.status === "ok") {
         // Create a success message element
@@ -180,14 +182,14 @@
           successMessage.classList.remove("opacity-0");
         }, 100);
 
-        // Remove the message after a few seconds with a fade-out effect
+        // Remove the message after a few seconds with a fade-out effect, then redirect
         setTimeout(() => {
-          successMessage.classList.add("opacity-0");
+          successMessage.classList.add("opacity-0"); // fade out
           setTimeout(() => {
             successMessage.remove();
+            window.location.href = "/Lekemer/verify-email-instructions";
           }, 300); // Wait for the fade-out transition to complete
         }, 3000);
-        window.location.href = "/Lekemer/sign-in";
       } else {
         alert("Error: " + (data.message || "Something went wrong"));
       }

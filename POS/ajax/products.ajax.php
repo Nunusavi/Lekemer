@@ -6,15 +6,17 @@ require_once "../models/products.model.php";
 require_once "../controllers/categories.controller.php";
 require_once "../models/categories.model.php";
 
-class AjaxProducts{
+class AjaxProducts
+{
 
 	/*=============================================
 	GENERATE CODE FROM ID CATEGORY
-	=============================================*/	
+	=============================================*/
 
 	public $idCategory;
 
-	public function ajaxCreateProductCode(){
+	public function ajaxCreateProductCode()
+	{
 
 		$item = "idCategory";
 		$value = $this->idCategory;
@@ -23,100 +25,90 @@ class AjaxProducts{
 		$answer = controllerProducts::ctrShowProducts($item, $value, $order);
 
 		echo json_encode($answer);
-
 	}
 
 	/*=============================================
  	 EDIT PRODUCT
-  	=============================================*/ 
+  	=============================================*/
 
-  	public $idProduct;
+	public $idProduct;
 	public $getProducts;
 	public $productName;
 
-  	public function ajaxEditProduct(){
+	public function ajaxEditProduct()
+	{
 
-	    if($this->getProducts == "ok"){
+		if ($this->getProducts == "ok") {
 
-	      $item = null;
-	      $value = null;
-	      $order = "id";
+			$item = null;
+			$value = null;
+			$order = "id";
 
-		  $answer = controllerProducts::ctrShowProducts($item, $value, $order);
+			$answer = controllerProducts::ctrShowProducts($item, $value, $order);
 
-		  echo json_encode($answer);
+			echo json_encode($answer);
+		} else if ($this->productName != "") {
 
+			$item = "description";
+			$value = $this->productName;
+			$order = "id";
 
-	    }else if($this->productName != ""){
+			$answer = controllerProducts::ctrShowProducts($item, $value, $order);
 
-	      $item = "description";
-	      $value = $this->productName;
-	      $order = "id";
+			echo json_encode($answer);
+		} else {
 
-		  $answer = controllerProducts::ctrShowProducts($item, $value, $order);
-	      
-		  echo json_encode($answer);
+			$item = "id";
+			$value = $this->idProduct;
+			$order = "id";
 
-	    }else{
+			$answer = controllerProducts::ctrShowProducts($item, $value, $order);
 
-	      $item = "id";
-	      $value = $this->idProduct;
-		  $order = "id";
-
-		$answer = controllerProducts::ctrShowProducts($item, $value, $order);
-	      
-		  echo json_encode($answer);
-
-	    }
-
-  	}
-
+			echo json_encode($answer);
+		}
+	}
 }
 
 /*=============================================
 GENERATE CODE FROM ID CATEGORY
-=============================================*/	
+=============================================*/
 
-if(isset($_POST["idCategory"])){
+if (isset($_POST["idCategory"])) {
 
 	$productCode = new AjaxProducts();
-	$productCode -> idCategory = $_POST["idCategory"];
-	$productCode -> ajaxCreateProductCode();
-
+	$productCode->idCategory = $_POST["idCategory"];
+	$productCode->ajaxCreateProductCode();
 }
 
 /*=============================================
 EDIT PRODUCT
-=============================================*/ 
+=============================================*/
 
-if(isset($_POST["idProduct"])){
+if (isset($_POST["idProduct"])) {
 
-  $editProduct = new AjaxProducts();
-  $editProduct -> idProduct = $_POST["idProduct"];
-  $editProduct -> ajaxEditProduct();
-
+	$editProduct = new AjaxProducts();
+	$editProduct->idProduct = $_POST["idProduct"];
+	$editProduct->ajaxEditProduct();
 }
 
 /*=============================================
 GET PRODUCT
-=============================================*/ 
+=============================================*/
 
-if(isset($_POST["getProducts"])){
+if (isset($_POST["getProducts"])) {
 
-  $getProducts = new AjaxProducts();
-  $getProducts -> getProducts = $_POST["getProducts"];
-  $getProducts -> ajaxEditProduct();
-
+	$getProducts = new AjaxProducts();
+	$getProducts->getProducts = $_POST["getProducts"];
+	$getProducts->ajaxEditProduct();
 }
 
 /*=============================================
 GET PRODUCT NAME
-=============================================*/ 
+=============================================*/
 
-if(isset($_POST["productName"])){
+if (isset($_POST["productName"])) {
 
-  $getProducts = new AjaxProducts();
-  $getProducts -> productName = $_POST["productName"];
-  $getProducts -> ajaxEditProduct();
-
+	$getProducts = new AjaxProducts();
+	$getProducts->productName = $_POST["productName"];
+	$getProducts->ajaxEditProduct();
 }

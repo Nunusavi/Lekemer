@@ -1,10 +1,17 @@
 <?php
+
+namespace App;
+ini_set('log_errors', 1);
+ini_set('error_log', PROJECT_ROOT . '/error.log');
+use PDO;
+
 class Database {
     private static $instance = null;
     private $connection;
 
     private function __construct() {
         $this->connection = new PDO('mysql:host=localhost;dbname=shared_db', 'root', '');
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public static function getInstance() {

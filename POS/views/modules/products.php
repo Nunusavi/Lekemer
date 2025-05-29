@@ -1,6 +1,6 @@
 <?php
 
-if ($_SESSION["profile"] == "Seller") {
+if ($_SESSION["role"] == "Seller") {
 
   echo '<script>
 
@@ -23,7 +23,6 @@ if ($_SESSION["profile"] == "Seller") {
     </h1>
 
     <ol class="breadcrumb">
-
       <li><a href="home"><i class="fa fa-dashboard"></i> Home</a></li>
 
       <li class="active">Dashboard</li>
@@ -47,7 +46,6 @@ if ($_SESSION["profile"] == "Seller") {
         <table class="table table-bordered table-hover table-striped dt-responsive productsTable" width="100%">
 
           <thead>
-
             <tr>
 
               <th style="width:10px">#</th>
@@ -67,7 +65,7 @@ if ($_SESSION["profile"] == "Seller") {
 
         </table>
 
-        <!-- <input type="hidden" value="<?php echo $_SESSION['']; ?>" id="hiddenProfile"> -->
+        <input type="hidden" value="<?php echo $_SESSION['profile']; ?>" id="hiddenProfile">
 
       </div>
 
@@ -316,7 +314,6 @@ EDIT PRODUCT
         <!--=====================================
          BODY
         ======================================-->
-
         <div class="modal-body">
 
           <div class="box-body">
