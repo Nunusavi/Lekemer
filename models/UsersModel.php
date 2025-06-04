@@ -197,8 +197,6 @@ class UsersModel
 	}
 	public static function getCompanyById($companyId)
 	{
-		// Replace this with your actual database logic
-		// Example using PDO:
 		$db = Database::getInstance()->getConnection();
 		$stmt = $db->prepare("SELECT * FROM companies WHERE id = :id");
 		$stmt->execute(['id' => $companyId]);

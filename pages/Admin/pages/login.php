@@ -1,17 +1,26 @@
-<!-- pages/admin/login.php -->
 <?php
-session_start();
+// pages/admin/login.php
+require_once __DIR__ . './../../../Controllers/AdminController.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
+    $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    // Replace with your admin validation logic
-    if ($username === 'admin' && $password === 'admin123') {
-        $_SESSION['admin_logged_in'] = true;
-        header('Location: index.php?page=admin/dashboard');
-        exit;
+    if (!empty($email) && !empty($password)) {
+        $response = AdminController::login($email, $password);
+        if (is_array($response) && ($response['status'] ?? '') === 'success') {
+            session_start();
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['id'] = $response['user']['id'];
+            $_SESSION['name'] = $response['user']['name'];
+            $_SESSION['email'] = $response['user']['email'];
+            header('Location: ../../index.php?page=admin');
+            exit;
+        } else {
+            $error = $response['message'] ?? 'Login failed';
+        }
     } else {
-        $error = "Invalid login";
+        $error = 'Please fill in all fields';
     }
 }
 ?>
@@ -23,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="absolute inset-0 -z-10">
     <div class="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]"></div>
     <style>
-        html, body {
+        html,
+        body {
             overflow: hidden !important;
             height: 100%;
         }
@@ -42,15 +52,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h1 class="text-2xl text-center font-bold text-white">Admin Portal</h1>
                 <?php if (!empty($error)) echo "<p class='text-red-400 mt-2'>$error</p>"; ?>
                 <div class="mb-4 mt-6">
-                    <label class="block text-gray-300 text-sm font-semibold mb-2" for="username">
-                        Username
+                    <label class="block text-gray-300 text-sm font-semibold mb-2" for="email">
+                        Email
                     </label>
                     <input
                         class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-100 bg-zinc-800 border border-zinc-700 leading-tight focus:outline-none focus:ring-2 focus:ring-zinc-600 h-10 placeholder-gray-500"
-                        id="username"
-                        name="username"
-                        type="text"
-                        placeholder="Your username"
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Your email"
                         required />
                 </div>
                 <div class="mb-6 mt-6">

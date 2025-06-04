@@ -1,3 +1,14 @@
+<?php
+require_once __DIR__ . '../../../../Controllers/AdminController.php';
+
+$totalUsers = AdminController::getTotalUsers();
+$totalCompanies = AdminController::getTotalCompanies();
+$totalPayments = AdminController::getSumTotalPayments();
+$companyStats = AdminController::getCompanyStatsSummary();
+$paymentStats = AdminController::getPaymentStatsSummary();
+$recentUsers = AdminController::getUsers();
+
+?>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4">
     <!-- Card grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4 -->
     <div
@@ -16,7 +27,7 @@
             </p>
             <p
                 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                6389
+                <?php echo number_format($totalUsers); ?>
             </p>
         </div>
     </div>
@@ -39,7 +50,7 @@
             </p>
             <p
                 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                $ 46,760.89
+                <?php echo number_format($totalPayments) . ' ETB'; ?>
             </p>
         </div>
     </div>
@@ -56,11 +67,18 @@
         <div>
             <p
                 class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                New sales
+                Payments 
             </p>
             <p
-                class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                376
+                class="text-lg flex align-baseline font-semibold text-gray-700 dark:text-gray-200">
+                <span class="text-green-600 font-bold" title="Confirmed payments">
+                    <?php echo number_format($paymentStats['confirmed_payments']); ?>
+                    <span class="ml-1 text-xs" title="Confirmed">&#10003;</span>
+                </span>
+                <span class="text-yellow-600 font-bold ml-3" title="Pending payments">
+                    <?php echo number_format($paymentStats['pending_payments']); ?>
+                    <span class="ml-1 mb-3 text-xs" title="Pending">&#9203;</span>
+                </span>
             </p>
         </div>
     </div>
@@ -71,19 +89,18 @@
             class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path
-                    fill-rule="evenodd"
-                    d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                    clip-rule="evenodd"></path>
+                    d="M3 2a1 1 0 00-1 1v15a1 1 0 001 1h14a1 1 0 001-1V3a1 1 0 00-1-1H3zm1 2h12v13H4V4zm2 2v2h2V6H6zm0 4v2h2v-2H6zm0 4v2h2v-2H6zm4-8v2h2V6h-2zm0 4v2h2v-2h-2zm0 4v2h2v-2h-2z"
+                ></path>
             </svg>
         </div>
         <div>
             <p
                 class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                Pending contacts
+                Total companies
             </p>
             <p
                 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                35
+                <?php echo number_format($companyStats['total_companies']); ?>
             </p>
         </div>
     </div>

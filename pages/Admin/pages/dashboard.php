@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,16 +32,15 @@
             <div>
                 <div class="flex flex-col flex-1 w-full">
                     <?php include __DIR__ . '/header.php'; ?>
-                    <?php include __DIR__ . '/sidebar.php'; ?>
-                    <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+                    <div class="h-full mt-14 mb-10 ">
                         <?php include __DIR__ . '/statistics-cards.php'; ?>
                         <div class="p-4">
                             <!-- grid grid-cols-1 lg:grid-cols-2 p-4 gap-4 -->
                             <?php include __DIR__ . '/chart.php'; ?>
                         </div>
                         <div class="p-4">
-                            <div class="mb-10"><?php include __DIR__ . '/recent-activities.php'; ?></div>
-                            <?php include __DIR__ . '/client-table.php'; ?>
+                            <div class="mb-10"><?php include __DIR__ . '/client-table.php'; ?></div>
+                            <div class="mb-10"><?php include __DIR__ . '/paymentTable.php'; ?></div>
                         </div>
                     </div>
                 </div>
