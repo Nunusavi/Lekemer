@@ -22,7 +22,6 @@ use App\Controllers\UsersController;
         if (isset($_GET['token'])) {
             $verified = UsersController::ctrVerifyUserByToken($_GET['token']);
             if ($verified && $verified["status"] === "ok") {
-                echo '<pre>'; print_r($_SESSION); echo '</pre>';
                 // Set user session (you may want to store more user info as needed)
                 $_SESSION['user_id'] = $verified['user_id'] ?? null;
                 $_SESSION['user_email'] = $verified['email'] ?? null;

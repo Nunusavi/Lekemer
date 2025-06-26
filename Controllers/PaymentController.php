@@ -79,8 +79,8 @@ class PaymentController
             'first_name' => explode(' ', $company['name'])[0],
             'last_name' => explode(' ', $company['name'])[1] ?? '',
             'tx_ref' => $transactionId,
-            'callback_url' => 'https://d652-196-188-126-0.ngrok-free.app/Lekemer/payment_verification',
-            'return_url' => 'https://d652-196-188-126-0.ngrok-free.app/Lekemer/payment_verification?tx_ref=' . urlencode($transactionId),
+            'callback_url' => 'https://localhost/Lekemer/payment_verification',
+            'return_url' => 'https://localhost/Lekemer/payment_verification?tx_ref=' . urlencode($transactionId),
             'customization' => [
                 'title' => 'Subscription',
                 'description' => $company['subscription_plan'] . ' Plan Payment'

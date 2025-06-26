@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+  <?php 
+ require_once __DIR__ . '/../config.php';
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+ini_set('log_errors', 1);
+ini_set('error_log', PROJECT_ROOT . '/error.log');
+
+?>
 
 <head>
   <meta charset="UTF-8">
@@ -37,9 +48,9 @@
       </a>
     </div>
     <div class="text-center">
-        <span class="text-sm text-gray-600">Don’t have an account?</span>
-        <a href="/Lekemer/sign-up" class="text-sm text-blue-600 hover:underline">Sign Up</a>
-      </div>
+      <span class="text-sm text-gray-600">Don’t have an account?</span>
+      <a href="/Lekemer/sign-up" class="text-sm text-blue-600 hover:underline">Sign Up</a>
+    </div>
   </div>
   <div class="bg-white flex-1  p-8 rounded-2xl shadow-md w-full max-w-md mx-auto">
     <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Sign In to Lekemer POS</h2>
@@ -75,7 +86,7 @@
         </button>
       </div>
 
-      
+
     </form>
   </div>
 </body>
